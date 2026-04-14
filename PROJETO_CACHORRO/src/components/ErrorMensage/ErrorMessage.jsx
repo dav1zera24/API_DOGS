@@ -1,5 +1,12 @@
+import './ErrorMessage.css';
+
 const ErrorMessage = ({ message }) => {
-  return <p style={{ color: 'red' }}>❌ Erro: {message}</p>;
+  return (
+    <div className="error-message">
+      <span className="error-icon">⚠️</span>
+      <p className="error-text">{message}</p>
+    </div>
+  );
 };
 
 export default ErrorMessage;
