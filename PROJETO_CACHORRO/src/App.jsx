@@ -1,65 +1,71 @@
-import { useState } from 'react'
-import './App.css'
-import Header from './components/Header/Header'
-import DogCard from './components/DogCard/DogCard'
-import Loading from './components/Loading/Loading'
-import ErrorMessage from './components/ErrorMensage/ErrorMessage'
-import FetchButton from './components/FetchButton/FetchButton'
+import { useState } from 'react';
+import './App.css';
 
+// Note que agora entramos na pasta E chamamos o arquivo .jsx
+import Header from "./components/Header/Header";
+import DogCard from "./components/DogCard/DogCard";
+import Loading from "./components/Loading/Loading";
+import ErrorMessage from "./components/ErrorMensage/ErrorMessage";
+import FetchButton from "./components/FetchButton/FetchButton";
 function App() {
-  // Requisito 2: Gerenciamento de Estados
-  const [dogData, setDogData] = useState(null)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(null)
+  // Requisito 2: Estados essenciais
+  const [dogUrl, setDogUrl] = useState(null);
+  const [status, setStatus] = useState('idle'); // 'idle' | 'loading' | 'error' | 'success'
+  const [errorMessage, setErrorMessage] = useState('');
 
-  // Requisito 3 e 4: Requisição HTTP com Tratamento de Erros
-  const fetchDog = async () => {
-    setLoading(true)
-    setError(null) // Limpa erros anteriores (Requisito 4)
-
+  // Requisito 3 e 4: Lógica de Requisição HTTP
+  const handleFetchDog = async () => {
+    setStatus('loading');
+    setErrorMessage('');
+    
     try {
-      const response = await fetch('https://dog.ceo/api/breeds/image/random')
+      const response = await fetch('https://dog.ceo/api/breeds/image/random');
       
-      if (!response.ok) {
-        throw new Error('Não foi possível carregar os dados da API.')
-      }
+      if (!response.ok) throw new Error(`Erro HTTP: ${response.status} ${response.statusText}`);
 
-      const data = await response.json()
-      setDogData(data.message) // A API de cachorros retorna a URL na propriedade 'message'
-      
+      const data = await response.json();
+      if (data.status !== 'success') throw new Error('Resposta da API inválida');
+
+      setDogUrl(data.message);
+      setStatus('success');
     } catch (err) {
-      setError(err.message)
-    } finally {
-      setLoading(false)
+      setStatus('error');
+      setErrorMessage(err.message || 'Erro desconhecido');
     }
-  }
+  };
 
   return (
-    <div className="app-container">
-      {/* Requisito 1: Título e Explicação */}
+    <main className="app-container">
+      {/* Requisito 1: Cabeçalho com Contexto Cliente-Servidor */}
       <Header />
 
-      {/* Requisito 1 e 5: Botão disparador com controle de loading */}
-      <FetchButton onClick={fetchDog} disabled={loading} />
+      {/* Requisito 1 e 5: Botão de ação */}
+      <FetchButton 
+        onClick={handleFetchDog} 
+        disabled={status === 'loading'} 
+      />
 
-      {/* Requisito 5: Feedback Visual Condicional */}
-      <div className="content-area">
-        {loading && <Loading />}
-        
-        {error && <ErrorMessage message={error} />}
-
-        {/* Requisito 5 e 6: Exibição dos dados (apenas se não estiver carregando e houver dados) */}
-        {!loading && !error && dogData && (
-          <DogCard imageUrl={dogData} />
+      {/* Área Dinâmica de Conteúdo */}
+      <section className="content-area">
+        {status === 'idle' && (
+          <p className="initial-message">
+            Pronto para conhecer um novo amigo? <br/> 
+            Clique no botão acima!
+          </p>
         )}
 
-        {/* Mensagem inicial quando não há dados (Requisito 5) */}
-        {!loading && !error && !dogData && (
-          <p>Clique no botão para buscar um doguinho!</p>
+        {status === 'loading' && <Loading />}
+
+        {status === 'error' && (
+          <ErrorMessage message={errorMessage || "Ops! Ocorreu um erro ao buscar os dados. Verifique sua conexão."} />
         )}
-      </div>
-    </div>
-  )
+
+        {status === 'success' && dogUrl && (
+          <DogCard imageUrl={dogUrl} />
+        )}
+      </section>
+    </main>
+  );
 }
 
-export default App
+export default App;

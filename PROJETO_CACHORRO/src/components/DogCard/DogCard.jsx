@@ -3,11 +3,16 @@ import './DogCard.css';
 const DogCard = ({ imageUrl }) => {
   // Lógica para extrair a raça da URL
   // A URL da API segue o padrão: https://images.dog.ceo/breeds/nome-da-raca/imagem.jpg
-  const urlParts = imageUrl.split('/');
-  const breedRaw = urlParts[4]; // O nome da raça está sempre na 5ª posição (índice 4)
-  
-  // Limpa o nome (remove hífens e deixa a primeira letra maiúscula)
-  const breedName = breedRaw.replace('-', ' ').toUpperCase();
+  let breedName = 'Raça Desconhecida';
+  try {
+    const urlParts = imageUrl.split('/');
+    if (urlParts.length > 4) {
+      const breedRaw = urlParts[4]; // O nome da raça está sempre na 5ª posição (índice 4)
+      breedName = breedRaw.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+    }
+  } catch (err) {
+    console.warn('Erro ao extrair raça da URL:', err);
+  }
 
   return (
     <div className="dog-card">
