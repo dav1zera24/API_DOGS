@@ -1,12 +1,26 @@
+import './DogCard.css';
+
 const DogCard = ({ imageUrl }) => {
+  // Lógica para extrair a raça da URL
+  // A URL da API segue o padrão: https://images.dog.ceo/breeds/nome-da-raca/imagem.jpg
+  const urlParts = imageUrl.split('/');
+  const breedRaw = urlParts[4]; // O nome da raça está sempre na 5ª posição (índice 4)
+  
+  // Limpa o nome (remove hífens e deixa a primeira letra maiúscula)
+  const breedName = breedRaw.replace('-', ' ').toUpperCase();
+
   return (
-    <div className="dog-card" style={{ marginTop: '20px' }}>
-      <img src={imageUrl} alt="Cachorro aleatório" style={{ maxWidth: '300px', borderRadius: '8px' }} />
+    <div className="dog-card">
+      {/* 1° Campo: Imagem Dinâmica */}
+      <img 
+        src={imageUrl} 
+        alt={`Um cachorro da raça ${breedName}`} 
+        className="dog-image"
+      />
+      
+      {/* 2° Campo: Nome da Raça Dinâmica */}
       <div className="dog-info">
-        <p><strong>Nome:</strong> Amigão Aleatório</p>
-        <p><strong>Email:</strong> contato@dogceo.com</p>
-        <p><strong>Cidade:</strong> Mundo Canino</p>
-        <p><strong>Empresa:</strong> Dog CEO API Service</p>
+        <h2 className="dog-breed-title">{breedName}</h2>
       </div>
     </div>
   );

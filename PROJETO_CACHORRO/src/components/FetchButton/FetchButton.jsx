@@ -1,8 +1,16 @@
+import './FetchButton.css';
+
 const FetchButton = ({ onClick, disabled }) => {
   return (
-    <button onClick={onClick} disabled={disabled}>
-      {disabled ? "Carregando..." : "Buscar Novo Doguinho"}
-    </button>
+    <div className="button-container">
+      <button 
+        className="fetch-button" 
+        onClick={onClick} 
+        disabled={disabled}
+      >
+        {disabled ? "Buscando..." : "Gerar Novo Doguinho"}
+      </button>
+    </div>
   );
 };
 
