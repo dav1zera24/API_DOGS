@@ -1,57 +1,10 @@
-/* Importação de uma fonte moderna */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
-
-:root {
-  --azul-deep: #003366;
-  --bege-claro: #f5f5dc;
-  --branco-puro: #ffffff;
-  --cinza-suave: #e0e0e0;
+body {
+  min-height: 100vh;
+  margin: 0;
 }
 
 .app-container {
-  font-family: 'Inter', sans-serif;
-  background-color: var(--branco-puro);
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 40px 20px;
-  color: #333;
-}
-
-/* Área onde o conteúdo (Loading, Erro ou Card) aparece */
-.content-area {
-  width: 100%;
-  max-width: 500px;
-  margin-top: 30px;
-  min-height: 400px; /* Evita que o site "pule" quando o dado carrega */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--bege-claro);
-  border-radius: 20px;
-  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.05);
-  padding: 20px;
-  border: 1px solid var(--cinza-suave);
-}
-
-/* Mensagem inicial de "Clique no botão" */
-.initial-message {
-  color: var(--azul-deep);
-  font-weight: 600;
-  text-align: center;
-  opacity: 0.7;
-  font-size: 1.1rem;
-}
-
-/* Ajustes de responsividade */
-@media (max-width: 480px) {
-  .app-container {
-    padding: 20px 10px;
-  }
-  
-  .content-area {
-    min-height: 300px;
-  }
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Altura total da tela */
 }
