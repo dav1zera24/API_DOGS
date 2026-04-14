@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import './App.css'
-import Header from './components/Header'
-import DogCard from './components/DogCard'
-import Loading from './components/Loading'
-import ErrorMessage from './components/ErrorMessage'
-import FetchButton from './components/FetchButton'
+import Header from './components/Header/Header'
+import DogCard from './components/DogCard/DogCard'
+import Loading from './components/Loading/Loading'
+import ErrorMessage from './components/ErrorMensage/ErrorMessage'
+import FetchButton from './components/FetchButton/FetchButton'
 
 function App() {
   // Requisito 2: Gerenciamento de Estados
