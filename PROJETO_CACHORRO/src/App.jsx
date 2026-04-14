@@ -50,8 +50,7 @@ function App() {
       <section className="content-area">
         {status === 'idle' && (
           <p className="initial-message">
-            Pronto para conhecer um novo amigo? <br/> 
-            Clique no botão acima!
+          
           </p>
         )}
 
