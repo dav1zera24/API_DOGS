@@ -7,6 +7,7 @@ import DogCard from "./components/DogCard/DogCard";
 import Loading from "./components/Loading/Loading";
 import ErrorMessage from "./components/ErrorMensage/ErrorMessage";
 import FetchButton from "./components/FetchButton/FetchButton";
+import Footer from './components/Footer/Footer';
 function App() {
   // Requisito 2: Estados essenciais
   const [dogUrl, setDogUrl] = useState(null);
@@ -35,8 +36,8 @@ function App() {
   };
 
   return (
+
     <main className="app-container">
-      {/* Requisito 1: Cabeçalho com Contexto Cliente-Servidor */}
       <Header />
 
       {/* Requisito 1 e 5: Botão de ação */}
@@ -64,6 +65,9 @@ function App() {
           <DogCard imageUrl={dogUrl} />
         )}
       </section>
+      
+      <Footer />
+     
     </main>
   );
 }
